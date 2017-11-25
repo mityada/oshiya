@@ -134,23 +134,25 @@ void StanzaDispatcher::handlePubsubEvent(const XmlElement& event,
             {
                 if(makeString(xmpp_stanza_get_name(notification)) == "notification")
                 {
+                    XData parsedXData;
+
                     xmpp_stanza_t* xdata
                     {xmpp_stanza_get_child_by_ns(notification, "jabber:x:data")};
 
                     if(xdata and makeString(xmpp_stanza_get_name(xdata)) == "x")
                     {
-                        XData parsedXData {Util::parseXData(XmlElement {xdata})};
-
-                        dispatch(
-                            InStanza<Type::PushNotification>
-                            {
-                                getStanzaHandler<Type::PushNotification>(),
-                                from,
-                                node,
-                                parsedXData
-                            }
-                        );
+                        parsedXData = Util::parseXData(XmlElement {xdata});
                     }
+
+                    dispatch(
+                        InStanza<Type::PushNotification>
+                        {
+                            getStanzaHandler<Type::PushNotification>(),
+                            from,
+                            node,
+                            parsedXData
+                        }
+                    );
                 }
             }
         }
