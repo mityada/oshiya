@@ -42,15 +42,15 @@ Component::Component(const Config& config)
 {
     xmpp_initialize();
 
-    const char* jid {mJid.full().c_str()};
-    const char* password {config.value("password").c_str()};
+    std::string jid(mJid.full());
+    std::string password(config.value("password"));
 
     // DEBUG:
-    std::cout << "setting component jid: " << jid << std::endl;
-    std::cout << "setting component password: " << password << std::endl;
+    std::cout << "setting component jid: " << jid.c_str() << std::endl;
+    std::cout << "setting component password: " << password.c_str() << std::endl;
 
-    xmpp_conn_set_jid(mConnection, jid);
-    xmpp_conn_set_pass(mConnection, password);
+    xmpp_conn_set_jid(mConnection, jid.c_str());
+    xmpp_conn_set_pass(mConnection, password.c_str());
 
     using Type = InPacket::Type;
     using namespace std::placeholders;
