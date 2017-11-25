@@ -698,8 +698,6 @@ std::unordered_map<AppServer::NodeIdT, Registration> AppServer::readRegs() const
         std::ifstream::in
     };
 
-    iFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
     if(not iFile.is_open())
     {
         // TODO: log info
@@ -709,6 +707,8 @@ std::unordered_map<AppServer::NodeIdT, Registration> AppServer::readRegs() const
 
     else
     {
+        iFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
         while(not iFile.eof())
         {
             NodeIdT node;
