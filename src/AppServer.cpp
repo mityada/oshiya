@@ -131,7 +131,7 @@ void AppServer::iqResultReceived(const Jid& from,
                     setAffiliationId,
                     node,
                     Jid::removeResource(pending.getRegistration().getUser()),
-                    "publish-only"
+                    "publisher" // FIXME change back to "publish-only" when Openfire will support it
                 );
 
                 pubsubSubscribe(subscribeId, node);
