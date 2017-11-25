@@ -78,16 +78,6 @@ Backend::NotificationQueueT GcmBackend::send(const NotificationQueueT& notificat
         );
 
         mCurl.add(
-            curl_pair<CURLoption, std::string>
-            {CURLOPT_SSLCERT, certFile}
-        );
-
-        mCurl.add(
-            curl_pair<CURLoption, std::string>
-            {CURLOPT_SSLKEY, certFile}
-        );
-
-        mCurl.add(
             curl_pair<CURLoption, bool>
             {CURLOPT_SSL_VERIFYPEER, true}
         );

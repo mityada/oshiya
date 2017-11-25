@@ -604,7 +604,7 @@ AppServer::makeBackends()
         
         Backend::Type type {Backend::makeType(backendConfig.value("type"))};
         std::string appName {backendConfig.value("app_name", std::string {"any"})};
-        std::string certFile {backendConfig.value("certfile")};
+        std::string certFile {backendConfig.value("certfile", std::string {})};
         std::string authKey {backendConfig.value("auth_key", std::string {})};
     
         ret.emplace(
