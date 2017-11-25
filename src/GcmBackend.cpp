@@ -251,6 +251,7 @@ std::string GcmBackend::makePayload(const std::string& token,
     jsonPayload["to"] = token;
     jsonPayload["expiry_time"] = Parameters::NotificationExpireTime;
     jsonPayload["data"] = data;
+    jsonPayload["priority"] = "high";
 
     return mWriter.write(jsonPayload); 
 }
