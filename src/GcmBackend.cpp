@@ -174,7 +174,7 @@ bool GcmBackend::processSuccessResponse(const std::string& responseBody,
 
     bool success {reader.parse(responseBody, root)};
 
-    if(not success)
+    if ((not success) or (not root.isObject()))
     {
         // invalid response, treating as non-recoverable error
         notification.unregisterCb();
@@ -205,7 +205,16 @@ bool GcmBackend::processSuccessResponse(const std::string& responseBody,
         return false;
     }
 
-    std::string error {results.get("error", "").asString()};
+    Json::Value result { results.get(0u, Json::Value()) };
+
+    if (not result.isObject())
+    {
+        // invalid response, treating as non-recoverable error
+        notification.unregisterCb();
+        return false;
+    }
+
+    std::string error {result.get("error", "").asString()};
 
     if(error == "Unavailable" or error == "InternalServerError")
     {
